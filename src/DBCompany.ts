@@ -1,21 +1,14 @@
-import { connect, connection, disconnect } from "mongoose";
 import { Employee, EmployeeCollection } from "../database/database";
 
 class DBCompany {
-  private readonly uridb: string;
-  constructor() {
-    this.uridb = process.env.URIDB || "mongodb://localhost:27017/test";
-  }
-
-  async getEmployees(): Promise<Employee[] | undefined> {
+  async getEmployees(): Promise<Employee[]> {
     try {
-      await connect(this.uridb, {});
       const employees: Employee[] = await EmployeeCollection.find();
       return employees;
     } catch (error) {
       console.log(error);
-    } finally {
-      disconnect();
+      const employees: Employee[] = [];
+      return employees;
     }
   }
 }

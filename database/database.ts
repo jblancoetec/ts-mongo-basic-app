@@ -40,8 +40,6 @@ export const createDB = async () => {
     await EmployeeCollection.create(employees);
   } catch (error) {
     console.log(error);
-  } finally {
-    disconnect();
   }
 };
 
