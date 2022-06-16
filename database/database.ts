@@ -44,10 +44,7 @@ export const createDB = async () => {
 };
 
 export const destroyDB = async () => {
-  const uridb = process.env.URIDB || "mongodb://localhost:27017/test";
-  const opctions: ConnectOptions = {};
   try {
-    await connect(uridb, opctions);
     await EmployeeCollection.deleteMany({});
   } catch (error) {
     console.log(error);
