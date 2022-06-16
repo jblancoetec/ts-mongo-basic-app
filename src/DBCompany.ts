@@ -1,4 +1,4 @@
-import { connect, connection } from "mongoose";
+import { connect, connection, disconnect } from "mongoose";
 import { Employee, EmployeeCollection } from "../database/database";
 
 class DBCompany {
@@ -15,7 +15,7 @@ class DBCompany {
     } catch (error) {
       console.log(error);
     } finally {
-      await connection.close();
+      disconnect();
     }
   }
 }

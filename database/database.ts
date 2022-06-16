@@ -1,4 +1,11 @@
-import { connect, connection, ConnectOptions, model, Schema } from "mongoose";
+import {
+  connect,
+  connection,
+  ConnectOptions,
+  disconnect,
+  model,
+  Schema,
+} from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -34,7 +41,7 @@ export const createDB = async () => {
   } catch (error) {
     console.log(error);
   } finally {
-    await connection.close();
+    disconnect();
   }
 };
 
@@ -47,6 +54,6 @@ export const destroyDB = async () => {
   } catch (error) {
     console.log(error);
   } finally {
-    await connection.close();
+    disconnect();
   }
 };
