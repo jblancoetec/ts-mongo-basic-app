@@ -1,11 +1,4 @@
-import {
-  connect,
-  connection,
-  ConnectOptions,
-  disconnect,
-  model,
-  Schema,
-} from "mongoose";
+import { connect, ConnectOptions, disconnect, model, Schema } from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -33,10 +26,9 @@ const employees: Employee[] = [
 
 // create database with documents of type Employee
 export const createDB = async () => {
-  const uridb = process.env.URIDB || "mongodb://localhost:27017/test";
-  const opctions: ConnectOptions = {};
   try {
-    await connect(uridb, opctions);
+    const uridb = process.env.URIDB || "mongodb://localhost:27017/test";
+    await connect(uridb);
     await EmployeeCollection.create(employees);
   } catch (error) {
     console.log(error);
@@ -45,7 +37,7 @@ export const createDB = async () => {
 
 export const destroyDB = async () => {
   try {
-    await EmployeeCollection.deleteMany({});
+    await EmployeeCollection.deleteMany();
   } catch (error) {
     console.log(error);
   } finally {
