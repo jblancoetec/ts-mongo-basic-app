@@ -48,3 +48,5 @@ Procurar tener actualizado `node.js` a la versión lts. Para saber si Node.js es
 
 - [TypeScript](https://www.typescriptlang.org/)
 - [Jest](https://jestjs.io/)
+- [Mongoose](https://mongoosejs.com/)
+- [MongoDB](https://www.mongodb.com/docs/drivers/node/current/)
