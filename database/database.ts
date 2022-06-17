@@ -8,6 +8,10 @@ export type Employee = {
   salary: number;
 };
 
+export type EmployeeWithID = Employee & {
+  _id: string;
+};
+
 // create a schema for the Employee type
 export const EmployeeSchema = new Schema<Employee>({
   name: { type: String, required: true },
