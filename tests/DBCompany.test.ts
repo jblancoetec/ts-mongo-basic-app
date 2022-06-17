@@ -1,17 +1,21 @@
 import DBCompany from "../src/DBCompany";
 import { createDB, destroyDB } from "../database/database";
 import dotenv from "dotenv";
+import { MongoClient } from "mongodb";
 dotenv.config();
 
-const db = new DBCompany();
+const uri = process.env.URIDB || "mongodb://localhost:27017";
+const client = new MongoClient(uri);
 
 beforeAll(() => {
-  return createDB();
+  return createDB(client);
 });
 
 afterAll(() => {
-  return destroyDB();
+  return destroyDB(client);
 });
+
+const db = new DBCompany(client.db("company"));
 
 test("Deberian existir tres empleados en la base de datos", async () => {
   const employees = await db.getEmployees();

@@ -1,24 +1,29 @@
-import { MongoClient } from "mongodb";
+import { Db } from "mongodb";
+
+export type Employee = {
+  _id: string;
+  name: string;
+  salary: number;
+};
 
 class DBCompany {
-  private readonly uri: string;
+  constructor(private readonly db: Db) {}
 
-  constructor() {
-    this.uri = process.env.URIDB || "mongodb://localhost:27017";
-  }
-
-  async getEmployees() {
-    const client = new MongoClient(this.uri);
+  async getEmployees(): Promise<Employee[]> {
     try {
-      await client.connect();
-      const db = client.db("company");
-      const collection = db.collection("employees");
-      const employees = await collection.find({}).toArray();
+      const collection = this.db.collection("employees");
+      const documents = await collection.find({}).toArray();
+      const employees: Employee[] = documents.map((document) => {
+        return {
+          _id: document._id.toString(),
+          name: document.name,
+          salary: document.salary,
+        };
+      });
       return employees;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      await client.close();
+    } catch {
+      console.log("Error al obtener los empleados");
+      return [];
     }
   }
 }
