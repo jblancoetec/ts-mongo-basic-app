@@ -1,47 +1,47 @@
-import { connect, ConnectOptions, disconnect, model, Schema } from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
+import { MongoClient } from "mongodb";
 
-// create a type o interface representing a document in MongoDB
-export type Employee = {
-  name: string;
-  salary: number;
-};
-
-// create a schema for the Employee type
-export const EmployeeSchema = new Schema<Employee>({
-  name: { type: String, required: true },
-  salary: { type: Number, required: true },
-});
-
-// create a model for the Employee type
-export const EmployeeCollection = model<Employee>("Employee", EmployeeSchema);
-
-// documents for testing
-const employees: Employee[] = [
-  { name: "Ryan Ray", salary: 50000 },
-  { name: "Joe McMillan", salary: 40000 },
-  { name: "John Carter", salary: 50000 },
-];
-
-// create database with documents of type Employee
 export const createDB = async () => {
+  const uri = process.env.URIDB || "mongodb://localhost:27017";
+  const client = new MongoClient(uri);
   try {
-    const uridb = process.env.URIDB || "mongodb://localhost:27017/test";
-    await connect(uridb);
-    await EmployeeCollection.create(employees);
-  } catch (error) {
-    console.log(error);
-    await disconnect();
+    await client.connect();
+    const db = client.db("company");
+    const collection = db.collection("employees");
+    await collection.insertMany([
+      {
+        id: 1,
+        name: "Ryan Ray",
+        salary: 20000,
+      },
+      {
+        id: 2,
+        name: "John McMillan",
+        salary: 40000,
+      },
+      {
+        id: 3,
+        name: "John Carter",
+        salary: 50000,
+      },
+    ]);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    await client.close();
   }
 };
 
 export const destroyDB = async () => {
+  const uri = process.env.URIDB || "mongodb://localhost:27017";
+  const client = new MongoClient(uri);
   try {
-    await EmployeeCollection.deleteMany();
-  } catch (error) {
-    console.log(error);
+    await client.connect();
+    const db = client.db("company");
+    const collection = db.collection("employees");
+    await collection.deleteMany({});
+  } catch (err) {
+    console.log(err);
   } finally {
-    disconnect();
+    await client.close();
   }
 };
