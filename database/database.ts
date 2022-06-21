@@ -31,7 +31,7 @@ const employees: Employee[] = [
 // create database with documents of type Employee
 export const createDB = async () => {
   try {
-    const uridb = process.env.URIDB || "mongodb://localhost:27017/test";
+    const uridb = process.env.URIDB || "mongodb://localhost:27017";
     await connect(uridb);
     await EmployeeCollection.create(employees);
   } catch (error) {
