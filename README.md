@@ -44,6 +44,12 @@ Procurar tener actualizado `node.js` a la versión lts. Para saber si Node.js es
 
 - 🧪Para ejecutar los test de covertura, usar el comando `npm run test:coverage`
 
+## Variables de entorno
+
+- `URIDB`: Dirección uri de la base de datos. Por defecto es `mongodb://localhost:27017`
+
+Se puede usar el archivo `.env` para configurar estas variables de entorno en testing y desarrollo. Solo se debe ejecutar el comando `cp .env.example .env`.
+
 ## Características
 
 - [TypeScript](https://www.typescriptlang.org/)
