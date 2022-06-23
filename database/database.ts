@@ -35,7 +35,7 @@ export const createDB = async () => {
     await connect(uridb);
     await EmployeeCollection.create(employees);
   } catch (error) {
-    console.log(error);
+    console.log("Error al crear la base de datos");
     await disconnect();
   }
 };
@@ -44,7 +44,7 @@ export const destroyDB = async () => {
   try {
     await EmployeeCollection.deleteMany();
   } catch (error) {
-    console.log(error);
+    console.log("Error al emliminar la base de datos");
   } finally {
     disconnect();
   }
